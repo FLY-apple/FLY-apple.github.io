@@ -10,7 +10,7 @@
     
     
     
-    <title>Database | Hexo</title>
+    <title>sqli-labs_3 | Hexo</title>
     <link href="http://example.com" rel="prefetch" />
 
     
@@ -156,19 +156,19 @@
         <i class="fa fa-home"></i>
         <a href="http://example.com">Hexo</a>
         >
-        <span>Database</span>
+        <span>sqli-labs_3</span>
     </div>
     <!-- 大型设备详细文章 -->
     <div class="hidden-xs">
         <div class="title-article">
             <h1>
-                <a href="/2022/03/15/Database/">Database</a>
+                <a href="/2022/03/23/sqli-labs-3/">sqli-labs_3</a>
             </h1>
         </div>
         <div class="tag-article">
             
             <span class="label label-gal">
-                <i class="fa fa-calendar"></i> 2022-03-15
+                <i class="fa fa-calendar"></i> 2022-03-23
             </span>
             
         </div>
@@ -178,11 +178,11 @@
         <center>
             <div class="title-article">
                 <h4>
-                    <a href="/2022/03/15/Database/">Database</a>
+                    <a href="/2022/03/23/sqli-labs-3/">sqli-labs_3</a>
                 </h4>
             </div>
             <p>
-                <i class="fa fa-calendar"></i> 2022-03-15
+                <i class="fa fa-calendar"></i> 2022-03-23
             </p>
             <p>
                 
@@ -191,16 +191,26 @@
         </center>
     </div>
     <div class="content-article">
-        <h1 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h1><h2 id="MYSQL数据库介绍"><a href="#MYSQL数据库介绍" class="headerlink" title="MYSQL数据库介绍"></a>MYSQL数据库介绍</h2><p><img src="/Database/image-20220315095451816.png" alt="image-20220315095451816"></p>
-<h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><p>整型</p>
-<p>浮点型</p>
-<p><img src="/Database/image-20220315141221817.png" alt="image-20220315141221817"></p>
-<p><img src="/Database/image-20220315141443964.png" alt="image-20220315141443964"></p>
-<p><img src="/Database/image-20220315141726979.png" alt="image-20220315141726979"></p>
-<p><img src="/Database/image-20220315141925806.png" alt="image-20220315141925806"></p>
-<h3 id="PHP操作MySQL"><a href="#PHP操作MySQL" class="headerlink" title="PHP操作MySQL"></a>PHP操作MySQL</h3><p><img src="/Database/image-20220315162333097.png" alt="image-20220315162333097"></p>
-<p><img src="/Database/image-20220315162401605.png" alt="image-20220315162401605"></p>
-<p><img src="/Database/image-20220315162913157.png" alt="image-20220315162913157"></p>
+        <h1 id="sqli-labs-t3"><a href="#sqli-labs-t3" class="headerlink" title="sqli-labs-t3"></a>sqli-labs-t3</h1><p><strong>注：在进行题解之前，建议前往<a target="_blank" rel="noopener" href="https://jingyan.baidu.com/article/9c69d48fd98ddb13c9024e9b.html">sqli-labs第一关分析-百度经验 (baidu.com)</a>学习前两关的绕过原理并尝试自行解题。</strong></p>
+<h3 id="一、观察题目"><a href="#一、观察题目" class="headerlink" title="一、观察题目"></a>一、观察题目</h3><p>同t1，t2一样的提示，尝试提交id&#x3D;[num]，一切正常</p>
+<p><img src="/sqli-labs-3/image-20220323193147202.png" alt="image-20220323193147202"></p>
+<h3 id="二、寻找注入点"><a href="#二、寻找注入点" class="headerlink" title="二、寻找注入点"></a>二、寻找注入点</h3><p>尝试使用单引号，发现进行了报错</p>
+<p><img src="/sqli-labs-3/image-20220323193242026.png" alt="image-20220323193242026"></p>
+<p>根据报错信息可知，这里有字符型注入点，并且在id&#x3D;1之后有一个括号。</p>
+<p>尝试对括号进行绕过</p>
+<p>提交</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">id=1&#x27;) and 1=1 --+</span><br><span class="line">id=1&#x27;) and 1=2 --+</span><br></pre></td></tr></table></figure>
+
+<p><img src="/sqli-labs-3/image-20220323193703167.png" alt="image-20220323193703167"></p>
+<p><img src="/sqli-labs-3/image-20220323193715491.png" alt="image-20220323193715491"></p>
+<p>同t1、t2，尝试输出数据库名称验证绕过成功</p>
+<p>提交</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=1&#x27;) and 1=2 union select 1,2,database() --+</span><br></pre></td></tr></table></figure>
+
+<p><img src="/sqli-labs-3/image-20220323193847363.png" alt="image-20220323193847363"></p>
+<p>绕过成功</p>
+<h3 id="三、信息提取"><a href="#三、信息提取" class="headerlink" title="三、信息提取"></a>三、信息提取</h3><p>同t1，t2，在此不做过多赘述</p>
+<p><img src="/sqli-labs-3/image-20220323194047162.png" alt="image-20220323194047162"></p>
 
     </div>
 </article>
@@ -262,13 +272,19 @@
             
             <li class="list-group-item">
                 <span class="post-title">
+                    <a href="/2022/03/23/sqli-labs-3/">sqli-labs_3</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
                     <a href="/2022/03/23/sqli-labs-2/">sqli-labs_2</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2022/03/15/Database/">Database</a>
+                    <a href="/2022/03/22/sqli-labs-1/">sqli-labs_1</a>
                 </span>
             </li>
             
@@ -290,13 +306,19 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2022/03/15/Database/">Database</a>
+                    <a href="/2022/03/23/sqli-labs-2/">sqli-labs_2</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2022/03/23/sqli-labs-2/">sqli-labs_2</a>
+                    <a href="/2022/03/22/sqli-labs-1/">sqli-labs_1</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2022/03/23/sqli-labs-3/">sqli-labs_3</a>
                 </span>
             </li>
             
@@ -311,17 +333,17 @@
 
                 
                 <li>
-                    <a href="/2022/03/15/Database/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                    <a href="/2022/03/23/sqli-labs-3/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
                 </li>
                 
                 
                 <li>
-                    <a href="/2022/03/15/Database/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                    <a href="/2022/03/23/sqli-labs-3/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
                 </li>
                 
                 
                 <li>
-                    <a href="/2022/03/15/Database/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                    <a href="/2022/03/23/sqli-labs-3/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
                 </li>
                 
             </ul>

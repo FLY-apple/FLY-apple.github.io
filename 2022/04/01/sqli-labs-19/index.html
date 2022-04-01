@@ -10,7 +10,7 @@
     
     
     
-    <title>sqli-labs-6 | Hexo</title>
+    <title>sqli-labs-19 | Hexo</title>
     <link href="http://example.com" rel="prefetch" />
 
     
@@ -156,19 +156,19 @@
         <i class="fa fa-home"></i>
         <a href="http://example.com">Hexo</a>
         >
-        <span>sqli-labs-6</span>
+        <span>sqli-labs-19</span>
     </div>
     <!-- 大型设备详细文章 -->
     <div class="hidden-xs">
         <div class="title-article">
             <h1>
-                <a href="/2022/03/30/sqli-labs-6/">sqli-labs-6</a>
+                <a href="/2022/04/01/sqli-labs-19/">sqli-labs-19</a>
             </h1>
         </div>
         <div class="tag-article">
             
             <span class="label label-gal">
-                <i class="fa fa-calendar"></i> 2022-03-30
+                <i class="fa fa-calendar"></i> 2022-04-01
             </span>
             
         </div>
@@ -178,11 +178,11 @@
         <center>
             <div class="title-article">
                 <h4>
-                    <a href="/2022/03/30/sqli-labs-6/">sqli-labs-6</a>
+                    <a href="/2022/04/01/sqli-labs-19/">sqli-labs-19</a>
                 </h4>
             </div>
             <p>
-                <i class="fa fa-calendar"></i> 2022-03-30
+                <i class="fa fa-calendar"></i> 2022-04-01
             </p>
             <p>
                 
@@ -191,26 +191,27 @@
         </center>
     </div>
     <div class="content-article">
-        <h1 id="sqli-labs-t6"><a href="#sqli-labs-t6" class="headerlink" title="sqli-labs-t6"></a>sqli-labs-t6</h1><h2 id="一、观察题目"><a href="#一、观察题目" class="headerlink" title="一、观察题目"></a>一、观察题目</h2><p><img src="/2022/03/30/sqli-labs-6/image-20220330143043791.png" alt="image-20220330143043791"></p>
-<p><img src="/2022/03/30/sqli-labs-6/image-20220330143845204.png" alt="image-20220330143845204"></p>
-<p>看到题目基本可以推断，是第四题的翻版。</p>
-<p>尝试提交?id&#x3D;1</p>
-<p><img src="/2022/03/30/sqli-labs-6/image-20220330144006626.png" alt="image-20220330144006626"></p>
-<p>同样没有输出端口，因此使用报错注入构建输出端口</p>
-<h2 id="二、尝试寻找注入点"><a href="#二、尝试寻找注入点" class="headerlink" title="二、尝试寻找注入点"></a>二、尝试寻找注入点</h2><p>由题目提示，尝试提交id&#x3D;1”</p>
-<p><img src="/2022/03/30/sqli-labs-6/image-20220330144158337.png" alt="image-20220330144158337"></p>
-<p>可以看出1后面有一个双引号，由此可构建绕过语句</p>
-<p>提交</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=1&quot; --+</span><br></pre></td></tr></table></figure>
+        <h1 id="sqli-labs-t19"><a href="#sqli-labs-t19" class="headerlink" title="sqli-labs-t19"></a>sqli-labs-t19</h1><h2 id="零、前置知识"><a href="#零、前置知识" class="headerlink" title="零、前置知识"></a>零、前置知识</h2><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/bulh/articles/13265045.html">http请求头中Referer的含义和作用 - 步留痕 - 博客园 (cnblogs.com)</a></p>
+<h2 id="一、观察题目"><a href="#一、观察题目" class="headerlink" title="一、观察题目"></a>一、观察题目</h2><p><img src="/2022/04/01/sqli-labs-19/image-20220401163159203.png" alt="image-20220401163159203"></p>
+<p>输入admin，admin</p>
+<p><img src="/2022/04/01/sqli-labs-19/image-20220401163218555.png" alt="image-20220401163218555"></p>
+<p>提示Referer，结合题目，可以知道此题要在Referer中注入。</p>
+<h2 id="二、尝试寻找注入点"><a href="#二、尝试寻找注入点" class="headerlink" title="二、尝试寻找注入点"></a>二、尝试寻找注入点</h2><p>使用burp抓包送入repeater</p>
+<p><img src="/2022/04/01/sqli-labs-19/image-20220401163336753.png" alt="image-20220401163336753"></p>
+<p>尝试在referer后加单引号</p>
+<p><img src="/2022/04/01/sqli-labs-19/image-20220401163450338.png" alt="image-20220401163450338"></p>
+<p>发现报错，尝试构造语句</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Referer: &#x27;,1)#</span><br></pre></td></tr></table></figure>
 
-<p>成功绕过</p>
-<p><img src="/2022/03/30/sqli-labs-6/image-20220330144247896.png" alt="image-20220330144247896"></p>
-<h2 id="三、提取信息"><a href="#三、提取信息" class="headerlink" title="三、提取信息"></a>三、提取信息</h2><p>过程与上题相同，在此不过多赘述。在此提供其中查询列名的结果</p>
-<p>提交</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=1&quot; and extractvalue(1,concat(0x7e,(select group_concat(column_name) from information_schema.columns where table_name=&#x27;users&#x27;)))--+</span><br></pre></td></tr></table></figure>
+<p><img src="/2022/04/01/sqli-labs-19/image-20220401163531201.png" alt="image-20220401163531201"></p>
+<p>绕过成功。</p>
+<h2 id="三、提取数据"><a href="#三、提取数据" class="headerlink" title="三、提取数据"></a>三、提取数据</h2><p>尝试提取数据库名称</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Referer: &#x27;, extractvalue(1,concat(0x7e,database())))#</span><br></pre></td></tr></table></figure>
 
-<p><img src="/2022/03/30/sqli-labs-6/image-20220330144816132.png" alt="image-20220330144816132"></p>
-<h2 id="四、错误小结"><a href="#四、错误小结" class="headerlink" title="四、错误小结"></a>四、错误小结</h2><p>哎，没有错误~~</p>
+<p><img src="/2022/04/01/sqli-labs-19/image-20220401163713141.png" alt="image-20220401163713141"></p>
+<p>成功。</p>
+<p>在此不再进行赘述。</p>
+<h2 id="四、错误小结"><a href="#四、错误小结" class="headerlink" title="四、错误小结"></a>四、错误小结</h2><p>无错误，构造思路与上题相同。</p>
 
     </div>
 </article>
@@ -366,7 +367,7 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2022/03/31/sqli-labs-17/">sqli-labs-17</a>
+                    <a href="/2022/03/31/sqli-labs-11/">sqli-labs-11</a>
                 </span>
             </li>
             
@@ -390,19 +391,19 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2022/03/30/sqli-labs-6/">sqli-labs-6</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2022/03/30/sqli-labs-7/">sqli-labs-7</a>
+                    <a href="/2022/03/30/sqli-labs-5/">sqli-labs-5</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
                     <a href="/2022/04/01/sqli-labs-19/">sqli-labs-19</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2022/04/01/sqli-labs-20/">sqli-labs-20</a>
                 </span>
             </li>
             
@@ -417,17 +418,17 @@
 
                 
                 <li>
-                    <a href="/2022/03/30/sqli-labs-6/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                    <a href="/2022/04/01/sqli-labs-19/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
                 </li>
                 
                 
                 <li>
-                    <a href="/2022/03/30/sqli-labs-6/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                    <a href="/2022/04/01/sqli-labs-19/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
                 </li>
                 
                 
                 <li>
-                    <a href="/2022/03/30/sqli-labs-6/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                    <a href="/2022/04/01/sqli-labs-19/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
                 </li>
                 
             </ul>

